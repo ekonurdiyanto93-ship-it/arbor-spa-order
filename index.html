@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spa Treatments Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #8B7BA8;
+        }
+        
+        .header h1 {
+            color: #8B7BA8;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #8B7BA8;
+        }
+        
+        .spa-section {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .spa-section h3 {
+            color: #8B7BA8;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .spa-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .spa-item-info {
+            flex: 1;
+        }
+        
+        .spa-item-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+            font-size: 15px;
+        }
+        
+        .spa-item-price {
+            color: #8B7BA8;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .spa-item-duration {
+            color: #888;
+            font-size: 13px;
+        }
+        
+        .spa-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        
+        .qty-input {
+            width: 70px;
+            text-align: center;
+            padding: 10px 8px;
+            font-size: 16px;
+        }
+        
+        .btn-add {
+            background: #8B7BA8;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            font-size: 14px;
+            flex: 1;
+            min-width: 100px;
+        }
+        
+        .btn-add:hover {
+            background: #6d5d85;
+        }
+        
+        .btn-add:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .extra-time-section {
+            background: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #8B7BA8;
+        }
+        
+        .extra-time-section h4 {
+            color: #8B7BA8;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .extra-time-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 12px;
+            border-radius: 6px;
+        }
+        
+        .cart-section {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #8B7BA8;
+        }
+        
+        .cart-section h3 {
+            color: #8B7BA8;
+            margin-bottom: 15px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .btn-remove:hover {
+            background: #c82333;
+        }
+        
+        .total-section {
+            background: #8B7BA8;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            background: #8B7BA8;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        
+        .btn-submit:hover {
+            background: #6d5d85;
+        }
+        
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #999;
+            padding: 20px;
+        }
+        
+        .success-message {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error-message {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 6px;
+        }
+        
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        
+        .checkbox-group label {
+            margin: 0;
+            font-weight: normal;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px 15px;
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header p {
+                font-size: 12px;
+            }
+            
+            .spa-item {
+                padding: 12px;
+            }
+            
+            .spa-item-name {
+                font-size: 14px;
+            }
+            
+            .spa-item-price {
+                font-size: 15px;
+            }
+            
+            .qty-input {
+                width: 60px;
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+            
+            .btn-add {
+                padding: 8px 15px;
+                font-size: 13px;
+                min-width: 90px;
+            }
+            
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .btn-remove {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💆 SPA TREATMENTS</h1>
+            <p>Relax & Rejuvenate Your Body and Mind</p>
+        </div>
+        
+        <div class="success-message" id="successMessage">
+            ✅ Booking berhasil dikirim! Terima kasih.
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ❌ Terjadi kesalahan. Silakan coba lagi.
+        </div>
+        
+        <form id="spaForm">
+            <!-- Customer Info -->
+            <div class="form-group">
+                <label>Nama *</label>
+                <input type="text" id="customerName" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Nomor Telepon *</label>
+                <input type="tel" id="phoneNumber" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Nomor Kamar *</label>
+                <input type="text" id="roomNumber" required>
+            </div>
+            
+            <!-- Spa Treatments -->
+            <div class="spa-section">
+                <h3>🌸 Pilih Treatment</h3>
+                
+                <div class="spa-item">
+                    <div class="spa-item-info">
+                        <div class="spa-item-name">Body Massage (Traditional)</div>
+                        <div class="spa-item-price">Rp 225.000</div>
+                        <div class="spa-item-duration">⏱ 60 Menit</div>
+                    </div>
+                    <div class="spa-item-controls">
+                        <input type="number" class="qty-input" min="1" value="1" id="qty-body_massage">
+                        <button type="button" class="btn-add" onclick="addToCart('Body Massage (Traditional)', 225000, 60, 'qty-body_massage')">+ Tambah</button>
+                    </div>
+                </div>
+                
+                <div class="spa-item">
+                    <div class="spa-item-info">
+                        <div class="spa-item-name">Aromatherapy</div>
+                        <div class="spa-item-price">Rp 250.000</div>
+                        <div class="spa-item-duration">⏱ 60 Menit</div>
+                    </div>
+                    <div class="spa-item-controls">
+                        <input type="number" class="qty-input" min="1" value="1" id="qty-aromatherapy">
+                        <button type="button" class="btn-add" onclick="addToCart('Aromatherapy', 250000, 60, 'qty-aromatherapy')">+ Tambah</button>
+                    </div>
+                </div>
+                
+                <div class="spa-item">
+                    <div class="spa-item-info">
+                        <div class="spa-item-name">Body Scrub</div>
+                        <div class="spa-item-price">Rp 350.000</div>
+                        <div class="spa-item-duration">⏱ 100 Menit</div>
+                    </div>
+                    <div class="spa-item-controls">
+                        <input type="number" class="qty-input" min="1" value="1" id="qty-body_scrub">
+                        <button type="button" class="btn-add" onclick="addToCart('Body Scrub', 350000, 100, 'qty-body_scrub')">+ Tambah</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Extra Time -->
+            <div class="extra-time-section">
+                <h4>⏰ Extra Time</h4>
+                <div class="extra-time-info">
+                    <div>
+                        <strong>Extra 30 Menit</strong><br>
+                        <span style="color: #8B7BA8; font-weight: bold;">Rp 100.000</span>
+                    </div>
+                    <div>
+                        <input type="number" class="qty-input" min="0" value="0" id="extraTime" style="width: 80px;">
+                    </div>
+                </div>
+                <p style="font-size: 12px; color: #666; margin-top: 10px;">
+                    <em>*Extra time akan diterapkan untuk total booking</em>
+                </p>
+            </div>
+            
+            <!-- Shopping Cart -->
+            <div class="cart-section">
+                <h3>🛒 Booking Summary</h3>
+                <div id="cartItems">
+                    <div class="empty-cart">Belum ada treatment yang dipilih</div>
+                </div>
+                <div id="extraTimeSummary" style="display: none; padding: 10px; background: white; border-radius: 6px; margin-top: 10px;">
+                    <strong>Extra Time:</strong> <span id="extraTimeDisplay">0 menit</span> = Rp <span id="extraTimeCost">0</span>
+                </div>
+                <div class="total-section">
+                    Total: Rp <span id="totalAmount">0</span>
+                </div>
+            </div>
+            
+            <!-- Preferred Date & Time -->
+            <div class="form-group">
+                <label>Tanggal & Waktu Pilihan *</label>
+                <input type="datetime-local" id="preferredDateTime" required>
+            </div>
+            
+            <!-- Additional Notes -->
+            <div class="form-group">
+                <label>Catatan Tambahan</label>
+                <textarea id="notes" rows="3" placeholder="Contoh: Alergi, preferensi aromaterapi, dll"></textarea>
+            </div>
+            
+            <button type="submit" class="btn-submit" id="submitBtn">
+                🌺 Booking Sekarang
+            </button>
+        </form>
+    </div>
+    
+    <script>
+        let cart = [];
+        
+        function addToCart(name, price, duration, qtyId) {
+            const qty = parseInt(document.getElementById(qtyId).value) || 1;
+            
+            // Check if item already exists
+            const existingIndex = cart.findIndex(item => item.name === name);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += qty;
+            } else {
+                cart.push({ name, price, duration, quantity: qty });
+            }
+            
+            updateCart();
+            document.getElementById(qtyId).value = 1;
+        }
+        
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+        
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const totalAmount = document.getElementById('totalAmount');
+            const extraTime = parseInt(document.getElementById('extraTime').value) || 0;
+            const extraTimeCost = extraTime * 100000;
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="empty-cart">Belum ada treatment yang dipilih</div>';
+                totalAmount.textContent = extraTimeCost.toLocaleString('id-ID');
+                
+                if (extraTime > 0) {
+                    document.getElementById('extraTimeSummary').style.display = 'block';
+                    document.getElementById('extraTimeDisplay').textContent = (extraTime * 30) + ' menit';
+                    document.getElementById('extraTimeCost').textContent = extraTimeCost.toLocaleString('id-ID');
+                } else {
+                    document.getElementById('extraTimeSummary').style.display = 'none';
+                }
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            let totalDuration = 0;
+            
+            cart.forEach((item, index) => {
+                const subtotal = item.price * item.quantity;
+                const itemDuration = item.duration * item.quantity;
+                total += subtotal;
+                totalDuration += itemDuration;
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <strong>${item.name}</strong><br>
+                            <small>Rp ${item.price.toLocaleString('id-ID')} × ${item.quantity} = Rp ${subtotal.toLocaleString('id-ID')}</small><br>
+                            <small style="color: #888;">⏱ ${itemDuration} menit</small>
+                        </div>
+                        <button type="button" class="btn-remove" onclick="removeFromCart(${index})">Hapus</button>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            
+            // Add extra time cost
+            if (extraTime > 0) {
+                total += extraTimeCost;
+                totalDuration += (extraTime * 30);
+                document.getElementById('extraTimeSummary').style.display = 'block';
+                document.getElementById('extraTimeDisplay').textContent = (extraTime * 30) + ' menit';
+                document.getElementById('extraTimeCost').textContent = extraTimeCost.toLocaleString('id-ID');
+            } else {
+                document.getElementById('extraTimeSummary').style.display = 'none';
+            }
+            
+            totalAmount.textContent = total.toLocaleString('id-ID');
+        }
+        
+        // Update cart when extra time changes
+        document.getElementById('extraTime').addEventListener('input', updateCart);
+        
+        document.getElementById('spaForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                alert('Keranjang kosong! Silakan pilih treatment terlebih dahulu.');
+                return;
+            }
+            
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Mengirim...';
+            
+            const extraTime = parseInt(document.getElementById('extraTime').value) || 0;
+            const extraTimeCost = extraTime * 100000;
+            
+            const bookingData = {
+                customer_name: document.getElementById('customerName').value,
+                phone_number: document.getElementById('phoneNumber').value,
+                room_number: document.getElementById('roomNumber').value,
+                treatments: cart,
+                extra_time_slots: extraTime,
+                extra_time_minutes: extraTime * 30,
+                extra_time_cost: extraTimeCost,
+                total_amount: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + extraTimeCost,
+                total_duration: cart.reduce((sum, item) => sum + (item.duration * item.quantity), 0) + (extraTime * 30),
+                preferred_datetime: document.getElementById('preferredDateTime').value,
+                notes: document.getElementById('notes').value,
+                booking_date: new Date().toISOString()
+            };
+            
+            // GANTI URL INI DENGAN N8N WEBHOOK URL ANDA
+            const webhookUrl = 'https://n8n.aptana.co.id/webhook/41527513-2468-4868-b362-5e0dd319476a';
+            
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bookingData)
+                });
+                
+                if (response.ok) {
+                    document.getElementById('successMessage').style.display = 'block';
+                    document.getElementById('spaForm').reset();
+                    cart = [];
+                    updateCart();
+                    
+                    setTimeout(() => {
+                        document.getElementById('successMessage').style.display = 'none';
+                    }, 5000);
+                } else {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('errorMessage').style.display = 'block';
+                
+                setTimeout(() => {
+                    document.getElementById('errorMessage').style.display = 'none';
+                }, 5000);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🌺 Booking Sekarang';
+            }
+        });
+    </script>
+</body>
+</html>
